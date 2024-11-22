@@ -9,16 +9,12 @@
 
 M73 P0 R5 ; sets print progress normal mode
 M73 Q0 S5 ; sets print progress stealth/silent mode
+
 M201 X4000 Y4000 Z200 E2500 ; sets maximum accelerations, mm/sec^2
 M203 X300 Y300 Z40 E100 ; sets maximum feedrates, mm / sec
 M204 P4000 R1200 T4000 ; sets acceleration (P, T) and retract acceleration (R), mm/sec^2
 M205 X8.00 Y8.00 Z2.00 E10.00 ; sets the jerk limits, mm/sec
 M205 S0 T0 ; sets the minimum extruding and travel feed rate, mm/sec
-
-; code for canceling and labeling objects in multi object print
-M486 S0
-M486 AShape-Box
-M486 S-1
 
 ;TYPE:Custom
 M17 ; enable steppers

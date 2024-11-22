@@ -9,15 +9,12 @@
 
 M73 P0 R76
 M73 Q0 S78
+
 M201 X4000 Y4000 Z200 E2500 ; sets maximum accelerations, mm/sec^2
 M203 X300 Y300 Z40 E100 ; sets maximum feedrates, mm / sec
 M204 P4000 R1200 T4000 ; sets acceleration (P, T) and retract acceleration (R), mm/sec^2
 M205 X8.00 Y8.00 Z2.00 E10.00 ; sets the jerk limits, mm/sec
 M205 S0 T0 ; sets the minimum extruding and travel feed rate, mm/sec
-
-M486 S0
-M486 AShape-Box
-M486 S-1
 
 ;TYPE:Custom
 M17 ; enable steppers
@@ -27,7 +24,7 @@ M862.5 P2 ; g-code level check
 M862.6 P"Input shaper" ; FW feature check
 M115 U6.1.3+7898
 
-M555 X75 Y51 W100 H104
+M555 X75 Y51 W100 H104 ; setting bed printing area
 
 G90 ; use absolute coordinates
 M83 ; extruder relative mode
@@ -52,23 +49,23 @@ M84 E ; turn off E motor
 
 G29 P9 X10 Y-4 W32 H4
 
-M106 S100
+M106 S100 ; set fan speed
 
 G0 Z40 F10000
 
 M190 S60 ; wait for bed temp
 
-M107
+M107 ; fan off
 
 ;
-; MBL
+; Mesh bed leveling
 ;
 M84 E ; turn off E motor
-G29 P1 ; invalidate mbl & probe print area
+G29 P1 ; invalidate mesh bed leveling & probe print area
 G29 P1 X0 Y0 W50 H20 C ; probe near purge place
-G29 P3.2 ; interpolate mbl probes
-G29 P3.13 ; extrapolate mbl outside probe area
-G29 A ; activate mbl
+G29 P3.2 ; interpolate mesh bed leveling probes
+G29 P3.13 ; extrapolate mesh bed leveling outside probe area
+G29 A ; activate mesh bed leveling
 
 ; prepare for purge
 M104 S230
@@ -98,7 +95,12 @@ M83 ; use relative distances for extrusion
 M572 S0.036 ; Filament gcode
 
 M142 S36 ; set heatbreak target temp
-M107
+M107 ; fan off
+
+;------------------------------------------------
+; START PRINT
+;------------------------------------------------
+
 ;LAYER_CHANGE
 ;Z:0.2
 ;HEIGHT:0.2
